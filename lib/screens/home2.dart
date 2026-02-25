@@ -8,6 +8,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
           padding: EdgeInsets.only(right: 30, left: 30),
@@ -62,9 +63,37 @@ class HomePage extends StatelessWidget {
           ),
         ),
         SizedBox(height: 10.h),
-        Padding(
-          padding: EdgeInsets.only(left: 30.w,top: 30.h,right: 30.w,bottom: 100.h),
+        Container(
+          height: 700.h,
+          padding: EdgeInsets.only(
+            left: 30.w,
+            top: 30.h,
+            right: 30.w,
+            bottom: 100.h,
+          ),
           child: VideoPlayerWidget(),
+        ),
+        
+        Padding(
+          padding: EdgeInsets.only(right:30.w, bottom: 30.h),
+          child: Text("أهم المعالم الأثرية",style: TextStyle(fontSize: 24.sp,fontWeight: FontWeight.bold , color: Color(0xffffe5df)),),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 30.w,right: 30.w),
+          height: 100.h,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            gradient: LinearGradient(
+              colors: [Color(0xffa4442e), Color(0xffffe5df)],
+            ),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(children: [Text("data"), Text("data1"),Text("data2")]),
+              Image(image: AssetImage("")),
+            ],
+          ),
         ),
       ],
     );
@@ -82,7 +111,6 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   late VideoPlayerController controller;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     controller = VideoPlayerController.asset("assets/videos/jordan.mp4")
       ..initialize().then((value) {
@@ -91,8 +119,14 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   }
 
   @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Column(
+    return Stack(
       children: [
         Center(
           child: controller.value.isInitialized
@@ -102,11 +136,19 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                 )
               : Text("تعذر التشغيل"),
         ),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(shape:CircleBorder()),
-          onPressed: (){
-          controller.value.isPlaying? controller.pause():controller.play();
-        }, child: Icon(controller.value.isPlaying?Icons.play_arrow:Icons.pause))
+        Center(
+          child: IconButton(
+            style: ElevatedButton.styleFrom(shape: CircleBorder()),
+            onPressed: () async {
+              controller.value.isPlaying
+                  ? controller.pause()
+                  : controller.play();
+            },
+            icon: controller.value.isPlaying
+                ? Icon(Icons.pause)
+                : Icon(Icons.play_arrow),
+          ),
+        ),
       ],
     );
   }
