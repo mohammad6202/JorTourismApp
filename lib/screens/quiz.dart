@@ -21,22 +21,22 @@ class _QuizScreenState extends State<QuizScreen> {
     {
       "question": "1. بماذا تشتهر البتراء؟",
       "options": ["صخورها السوداء", "صخورها الوردية", "أعمدتها اليونانية"],
-      "correctAnswerIndex": 1 // صخورها الوردية
+      "correctAnswerIndex": 1, // صخورها الوردية
     },
     {
       "question": "2. أين تقع قلعة عجلون",
       "options": ["في شمال الأردن", "في البادية الغربية", "في جنوب الأردن"],
-      "correctAnswerIndex": 0 // في شمال الأردن
+      "correctAnswerIndex": 0, // في شمال الأردن
     },
     {
       "question": "3. متى تم اكتشاف أعمدة جرش",
       "options": ["عام 1806م", "عام 1920م", "عام 1896م"],
-      "correctAnswerIndex": 0 // عام 1806م
+      "correctAnswerIndex": 0, // عام 1806م
     },
     {
       "question": "4. متى تم تأسيس محمية ضانا؟",
       "options": ["عام 1999م", "عام 1980م", "عام 1989م"],
-      "correctAnswerIndex": 2 // عام 1989م
+      "correctAnswerIndex": 2, // عام 1989م
     },
   ];
 
@@ -63,31 +63,36 @@ class _QuizScreenState extends State<QuizScreen> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            backgroundColor: const Color(0xFFFFE5DF),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            backgroundColor: Color(0xffffe5df),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
             title: const Text(
               "النتيجة النهائية",
               textAlign: TextAlign.center,
-              style: TextStyle(color: Color(0xFF552219), fontWeight: FontWeight.bold),
+              style: TextStyle(
+                color: Color(0xff612518),
+                fontWeight: FontWeight.bold,
+              ),
             ),
             content: Text(
               "لقد حصلت على $score من ${quizData.length} ${score >= 3 ? '🎉 ممتاااز!' : '👍 حظاً أوفر المرة القادمة!'}",
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 18, color: Color(0xFF552219)),
+              style: const TextStyle(fontSize: 18, color: Color(0xff612518)),
             ),
             actions: [
               Center(
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF552219),
-                    foregroundColor: const Color(0xFFFFE5DF),
+                    backgroundColor: Color(0xff612518),
+                    foregroundColor: Color(0xffffe5df),
                   ),
                   onPressed: () {
                     Navigator.pop(context); // إغلاق النافذة
                   },
                   child: const Text("حسناً"),
                 ),
-              )
+              ),
             ],
           );
         },
@@ -103,59 +108,62 @@ class _QuizScreenState extends State<QuizScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return  Padding(
-      padding:  EdgeInsets.all(30.h),
+    return Padding(
+      padding: EdgeInsets.all(30.h),
       child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const Text(
-                "لديك مجموعة من الأسئلة الترفيهية، أجب عليها\nواعرف درجتك النهائية!!!",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFFFFE5DF),
-                ),
-              ),
-              const SizedBox(height: 30),
-              
-              // بناء الأسئلة ديناميكياً من القائمة
-              ...List.generate(quizData.length, (index) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 20.0),
-                  child: _buildQuizCard(
-                    questionIndex: index,
-                    question: quizData[index]["question"],
-                    options: List<String>.from(quizData[index]["options"]),
-                  ),
-                );
-              }),
-              
-              const SizedBox(height: 10),
-              // زر التسليم
-              Align(
-                alignment: Alignment.centerLeft,
-                child: ElevatedButton(
-                  onPressed: _submitQuiz, // استدعاء دالة التسليم
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFFFE5DF),
-                    foregroundColor: const Color(0xFF552219),
-                    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                  ),
-                  child: const Text(
-                    "تسليم",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                ),
-              ),
-            ],
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const Text(
+            "لديك مجموعة من الأسئلة الترفيهية، أجب عليها\nواعرف درجتك النهائية!!!",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Color(0xffffe5df),
+            ),
           ),
+          const SizedBox(height: 30),
+
+          // بناء الأسئلة ديناميكياً من القائمة
+          ...List.generate(quizData.length, (index) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 20.0),
+              child: _buildQuizCard(
+                questionIndex: index,
+                question: quizData[index]["question"],
+                options: List<String>.from(quizData[index]["options"]),
+              ),
+            );
+          }),
+
+          const SizedBox(height: 10),
+          // زر التسليم
+          Align(
+            alignment: Alignment.centerLeft,
+            child: ElevatedButton(
+              onPressed: _submitQuiz, // استدعاء دالة التسليم
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xffffe5df),
+                foregroundColor: Color(0xff612518),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 40,
+                  vertical: 12,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25),
+                ),
+              ),
+              child: const Text(
+                "تسليم",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
-      
-      // شريط التنقل السفلي
+
+    
   }
 
   // دالة مساعدة لبناء شكل البطاقة بالخيارات التفاعلية
@@ -169,7 +177,7 @@ class _QuizScreenState extends State<QuizScreen> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         gradient: const LinearGradient(
-          colors: [Color(0xFFFFE5DF), Color(0xFFA64D3A)],
+          colors: [Color(0xffffe5df),Color(0xffa4442e)],
           begin: Alignment.centerRight,
           end: Alignment.centerLeft,
         ),
@@ -180,54 +188,61 @@ class _QuizScreenState extends State<QuizScreen> {
           Text(
             question,
             style: const TextStyle(
-              color: Color(0xFF552219),
-              fontSize: 16,
+              color: Color.fromARGB(255, 43, 16, 10),
+              fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: 12),
-          Align(
-            alignment: Alignment.center,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              // إنشاء الخيارات وجعلها قابلة للضغط
-              children: List.generate(options.length, (optionIndex) {
-                // التحقق مما إذا كان هذا الخيار هو المحدد حالياً
-                bool isSelected = selectedAnswers[questionIndex] == optionIndex;
-
-                return GestureDetector(
-                  onTap: () {
-                    // تحديث واجهة المستخدم عند اختيار إجابة
-                    setState(() {
-                      selectedAnswers[questionIndex] = optionIndex;
-                    });
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 6.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          // تغيير شكل الأيقونة إذا كانت محددة أو لا
-                          isSelected ? Icons.radio_button_checked : Icons.radio_button_unchecked,
-                          color: const Color(0xFF185A80),
-                          size: 22,
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          options[optionIndex],
-                          style: TextStyle(
-                            color: const Color(0xFF552219),
-                            fontSize: 14,
-                            // زيادة سماكة الخط للإجابة المحددة لتمييزها
-                            fontWeight: isSelected ? FontWeight.w900 : FontWeight.bold, 
+          Padding(
+            padding:  EdgeInsets.only(right: 30.w),
+            child: Align(
+              alignment: Alignment.topRight,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                // إنشاء الخيارات وجعلها قابلة للضغط
+                children: List.generate(options.length, (optionIndex) {
+                  // التحقق مما إذا كان هذا الخيار هو المحدد حالياً
+                  bool isSelected = selectedAnswers[questionIndex] == optionIndex;
+            
+                  return GestureDetector(
+                    onTap: () {
+                      // تحديث واجهة المستخدم عند اختيار إجابة
+                      setState(() {
+                        selectedAnswers[questionIndex] = optionIndex;
+                      });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 6.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            // تغيير شكل الأيقونة إذا كانت محددة أو لا
+                            isSelected
+                                ? Icons.radio_button_checked
+                                : Icons.radio_button_unchecked,
+                            color: const Color(0xFF185A80),
+                            size: 22,
                           ),
-                        ),
-                      ],
+                          const SizedBox(width: 8),
+                          Text(
+                            options[optionIndex],
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 41, 16, 7),
+                              fontSize: 18,
+                              // زيادة سماكة الخط للإجابة المحددة لتمييزها
+                              fontWeight: isSelected
+                                  ? FontWeight.w900
+                                  : FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              }),
+                  );
+                }),
+              ),
             ),
           ),
         ],

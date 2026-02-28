@@ -223,18 +223,23 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
               : Text("تعذر التشغيل"),
         ),
         Center(
-          child: IconButton(
-            style: ElevatedButton.styleFrom(shape: CircleBorder()),
-            onPressed: () async {
-              controller.value.isPlaying
-                  ? controller.pause()
-                  : controller.play();
-            },
-            icon: controller.value.isPlaying
-                ? Icon(Icons.pause)
-                : Icon(Icons.play_arrow),
-          ),
-        ),
+  child: IconButton(
+    onPressed: () async {
+
+      if (controller.value.isPlaying) {
+        await controller.pause();
+      } else {
+        await controller.play();
+      }
+
+      setState(() {}); // فقط لتحديث الأيقونة
+
+    },
+    icon: controller.value.isPlaying
+        ? const Icon(Icons.pause_circle, size: 40)
+        : const Icon(Icons.play_circle, size: 40),
+  ),
+),
       ],
     );
   }
